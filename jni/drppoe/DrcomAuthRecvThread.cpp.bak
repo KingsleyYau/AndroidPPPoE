@@ -1,0 +1,37 @@
+/*
+ * DrcomAuthRecvThread.cpp
+ *
+ *  Created on: 2014年2月22日
+ *      Author: kingsley
+ */
+
+#include "DrcomAuthRecvThread.h"
+
+DrcomAuthRecvThread::DrcomAuthRecvThread() {
+	// TODO Auto-generated constructor stub
+	mpDrppoePlugin = NULL;
+}
+
+DrcomAuthRecvThread::~DrcomAuthRecvThread() {
+	// TODO Auto-generated destructor stub
+}
+
+void DrcomAuthRecvThread::onRun() {
+	// 接收服务器数据
+	int iLen = 0;
+	char auth_data[MAX_AUTH_DATA_LEN];
+
+	DrUDPSocket updSocket;
+	if(!updSocket.Bind(61440)) {
+		return;
+	}
+
+	while(true) {
+		bzero(auth_data, MAX_AUTH_DATA_LEN);
+		// RecvData will sleep for timewait param, default is 3 seconds
+		iLen = updSocket.RecvData(auth_data, MAX_AUTH_DATA_LEN);
+		if(NULL != mpDrppoePlugin) {
+			mpDrppoePlugin->OnDrcomDialExtProtoHandler(auth_data, iLen);
+		}
+	}
+}

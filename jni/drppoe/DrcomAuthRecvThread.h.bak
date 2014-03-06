@@ -1,0 +1,28 @@
+/*
+ * DrcomAuthRecvThread.h
+ *
+ *  Created on: 2014年2月22日
+ *      Author: kingsley
+ */
+
+#ifndef DRCOMAUTHRECVTHREAD_H_
+#define DRCOMAUTHRECVTHREAD_H_
+
+#include "../common/DrUDPSocket.h"
+#include "../common/DrThread.h"
+
+class DrppoePlugin;
+class DrcomAuthRecvThread {
+public:
+	DrcomAuthRecvThread();
+	virtual ~DrcomAuthRecvThread();
+
+	void SetDrppoePlugin(DrppoePlugin *drppoePlugin);
+
+protected:
+	void onRun();
+private:
+	DrppoePlugin *mpDrppoePlugin;
+};
+
+#endif /* DRCOMAUTHRECVTHREAD_H_ */
